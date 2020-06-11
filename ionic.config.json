@@ -1,5 +1,7 @@
 {
   "name": "homgency",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
