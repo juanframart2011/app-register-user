@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { user } from "../../interface/user";
 
 @Component({
@@ -11,7 +11,7 @@ export class RegisterPage {
 
     isValidation = false;
 
-    userCurrent:user = {
+    userDummy:user = {
         nombres: "",
         apellidoPaterno: "",
         apellidoMaterno: "",
@@ -26,145 +26,130 @@ export class RegisterPage {
         email: "",
         fechaRegistroExterno: "",
         idExterno: 0,
-        registrado: "",
         direccion: ""
     };
+
+    userCurrent:user = this.userDummy;
+
     constructor(
         public alertController: AlertController,
+        private toastCtrl: ToastController,
         public loadingController: LoadingController
     ){}
 
-    async presentAlert() {
+    async _messageError() {
         const alert = await this.alertController.create({
             cssClass: 'my-custom-class',
-            header: 'Alert',
-            subHeader: 'Subtitle',
-            message: 'This is an alert message.',
+            header: 'Error de Validación',
+            message: 'Los campos son obligatorios',
             buttons: ['OK']
         });
 
         await alert.present();
     }
 
-    /*add_cart( p:number ){
+    async _messageSuccess(){
+        const toast = await this.toastCtrl.create({
+            message: "Se guardo con éxito el usuario",
+            duration: 3000,
+            color: "success",
+            position: "top"
+        });
+        toast.present();
+    }
 
-		let product = this.products[p];
-        //validamos si ya existe el arreglo de cart
-        let products = localStorage.getItem( 'list-user' );
+    _dateCurrent():string{
 
-        if( products != null ){
+        var date = new Date( Date.now() );
+        var monthCurrent = ( ( date.getMonth() > 8 ) ? ( date.getMonth() + 1) : ( '0' + ( date.getMonth() + 1 ) ) );
+        
+        let dateCurrent =  date.getFullYear() + '-' +  monthCurrent + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()));
+        dateCurrent = dateCurrent + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        return dateCurrent;
+    }
 
-            this._getCart( product, 1 );
+    _addUser(){
+        
+        this.userCurrent.fechaRegistroExterno = this._dateCurrent();
+		//validamos si ya existe la lista de usuario
+        let users = localStorage.getItem( 'list-user' );
+
+        if( users != null ){
+
+            this._getList( this.userCurrent );
         }
         else{
 
-            this._addProductCart( product, 1 );
+            this._addUserList( this.userCurrent );
         }
-
-        window.location.reload();
     }
     
-    //Función que agrega producto a carrito de compras
-    _addProductCart( product:any, qty:number ){
+    //Función que agrega usuario a la lista de usuario
+    _addUserList( user:user ){
 
-    	let price = 0;
-    	
-    	if( product.onsale == '0' ){
-
-    		price = product.price_store;
-    	}
-    	else{
-
-    		price = product.onsale_price_store;
-    	}
-
-        var products = { 
-            list: [
-                {
-                	product: product.product_id,
-                	qty:qty,
-                	description: product.description,
-					image: product.image_thumb,
-					name: product.product_name,
-					price: price
-                }
-            ]
+    	var listUser = { 
+            list: [ user ]
         };
 
         // Guardo el objeto como un string
-        localStorage.setItem( 'list-user', JSON.stringify( products ) );
+        localStorage.setItem( 'list-user', JSON.stringify( listUser ) );
+        this._resetdata();
     }
 
     //Validamos si el producto existe y actualizamos su cantidad
-    _getCart( product:any, qty:any ){
+    _getList( user:user ){
 
-    	let products = JSON.parse( localStorage.getItem( "list-user" ) );
-    	let product_exists = 0;
+    	let listUser = JSON.parse( localStorage.getItem( "list-user" ) );
 
-		var cartProduct = [];
-		var qty_current = 0;
-		for( var p = 0; p < products.cart.length; p++ ){
-
-			//console.log( "Producto :: " + products.cart[p].product + " cantidad :: " + products.cart[p].qty );
-			if( products.cart[p].product == product ){
-
-				qty_current = Number( qty ) + parseInt( products.cart[p].qty );
-				product_exists = 1;
-			}
-			else{
-
-				qty_current = products.cart[p].qty;
-			}
-			cartProduct.push({
-				product: products.cart[p].product,
-				qty: qty_current,
-				description: products.cart[p].description,
-				image: products.cart[p].image,
-				name: products.cart[p].name,
-				price: products.cart[p].price
-			});
+        var listUserExist = [];
+        
+		for( var u = 0; u < listUser.list.length; u++ ){
+            
+			listUserExist.push( listUser.list[u] );
 		}
 
-		if( product_exists != 1 ){
+		listUserExist.push( user );
 
-			let price = 0;
-    	
-	    	if( product.onsale == '0' ){
-
-	    		price = product.price_store;
-	    	}
-	    	else{
-
-	    		price = product.onsale_price_store;
-	    	}
-
-			cartProduct.push({
-				product: product.product_id,
-				qty: qty,
-				description: product.description,
-				image: product.image_thumb,
-				name: product.product_name,
-				price: price
-			});
-		}
-
-		this._updateCart( cartProduct );
+		this._updateList( listUserExist );
     }
 
-    //Modificamos el carrito
-    _updateCart( cartProduct:any ){
+    _resetdata(){
+
+        this.userCurrent = {
+            nombres: "",
+            apellidoPaterno: "",
+            apellidoMaterno: "",
+            sexo: "",
+            fechaNacimiento: "",
+            nacionalidad: "",
+            lugarNacimiento: "",
+            paisResidencia: "",
+            estadoReside: "",
+            municipio: "",
+            localidad: "",
+            email: "",
+            fechaRegistroExterno: "",
+            idExterno: 0,
+            direccion: ""
+        };
+        this._messageSuccess();
+        this._closeLoading();
+    }
+
+    _updateList( listUser:any ){
 
         localStorage.removeItem( 'list-user' );
 
 		var productsCart = { 
-            list: cartProduct
+            list: listUser
         };
 
         // Guardo el objeto como un string
         localStorage.setItem( 'list-user', JSON.stringify( productsCart ) );
-    }*/
+        this._resetdata();
+    }
 
-    async closeLoading(){
+    async _closeLoading(){
         
         this.isValidation = false;
         return await this.loadingController.dismiss().then();
@@ -187,5 +172,19 @@ export class RegisterPage {
     saveUser(){
 
         this.openLoading();
+        
+        if( this.userCurrent.nombres && this.userCurrent.apellidoPaterno /*&& this.userCurrent.sexo
+            && this.userCurrent.fechaNacimiento && this.userCurrent.nacionalidad 
+            && this.userCurrent.lugarNacimiento && this.userCurrent.paisResidencia
+            && this.userCurrent.estadoReside && this.userCurrent.municipio && this.userCurrent.localidad
+            && this.userCurrent.direccion*/ ){
+
+                this._addUser();
+        }
+        else{
+
+            this._closeLoading();
+            this._messageError();
+        }
     }
 }

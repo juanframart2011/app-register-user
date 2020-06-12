@@ -9,16 +9,16 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Nombres</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.nombres" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Nombres <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.nombres" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Apellido Paterno</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.apellidoPaterno" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Apellido Paterno <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.apellidoPaterno" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -33,8 +33,8 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Sexo</ion-label>
-                    <ion-select placeholder="Selecciona Sexo" [(ngModel)]="userCurrent.sexo" #ctrl="ngModel" required>
+                    <ion-label position="floating">Sexo <span classs="required-input">*</span></ion-label>
+                    <ion-select placeholder="Selecciona Sexo" [(ngModel)]="userCurrent.sexo" required>
                         <ion-select-option value="femenino">Femenino</ion-select-option>
                         <ion-select-option value="masculino">Masculino</ion-select-option>
                     </ion-select>
@@ -44,57 +44,57 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Fecha de Nacimiento</ion-label>
+                    <ion-label position="floating">Fecha de Nacimiento <span classs="required-input">*</span></ion-label>
                     <ion-input ></ion-input>
-                    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="userCurrent.fechaNacimiento" #ctrl="ngModel" required display-timezone="utc"></ion-datetime>
+                    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="userCurrent.fechaNacimiento" requireddisplay-timezone="utc"></ion-datetime>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Nacionalidad</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.nacionalidad" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Nacionalidad <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.nacionalidad" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Lugar de Nacimiento</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.lugarNacimiento" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Lugar de Nacimiento <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.lugarNacimiento" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">País de Residencia</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.paisResidencia" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">País de Residencia <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.paisResidencia" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Estado Reside</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.estadoReside" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Estado Reside <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.estadoReside" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Municipio</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.municipio" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Municipio <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.municipio" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Localidad</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.localidad" #ctrl="ngModel" required></ion-input>
+                    <ion-label position="floating">Localidad <span classs="required-input">*</span></ion-label>
+                    <ion-input [(ngModel)]="userCurrent.localidad" required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -102,15 +102,15 @@
             <ion-col>
                 <ion-item>
                     <ion-label position="floating">Correo Electronico</ion-label>
-                    <ion-input [(ngModel)]="userCurrent.email" #ctrl="ngModel" required></ion-input>
+                    <ion-input [(ngModel)]="userCurrent.email"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Dirección</ion-label>
-                    <ion-textarea [(ngModel)]="userCurrent.direccion" #ctrl="ngModel" required></ion-textarea>
+                    <ion-label position="floating">Dirección <span classs="required-input">*</span></ion-label>
+                    <ion-textarea [(ngModel)]="userCurrent.direccion" required></ion-textarea>
                 </ion-item>
             </ion-col>
         </ion-row>

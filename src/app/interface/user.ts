@@ -1,7 +1,7 @@
 export interface user {
     nombres: string;
     apellidoPaterno: string;
-    apellidoMaterno: string;
+    apellidoMaterno?: string;
     sexo: string;
     fechaNacimiento: string;
     nacionalidad: string;
@@ -10,9 +10,8 @@ export interface user {
     estadoReside: string;
     municipio: string;
     localidad: string;
-    email: string;
+    email?: string;
     fechaRegistroExterno: string;
     idExterno?: number;
-    registrado: string;
     direccion: string;
 }
