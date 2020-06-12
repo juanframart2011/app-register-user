@@ -5,9 +5,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Sincronizar</ion-title>
-        </ion-toolbar>
-    </ion-header>
+    <ion-list>
+        <ion-list-header color="primary" center lines="inset">
+            <h1><b>{{ syncUpWithout }}</b> Sin Sincronizar</h1>
+        </ion-list-header>
+        <div *ngIf="!isLoading && listUserCurrent.length > 0">
+            <ion-item lines="none" *ngFor="let user of listUserCurrent">
+                <ion-label color="primary">
+                    <h3>{{ user.nombres + ' ' + user.apellidoPaterno + ' ' + user.apellidoMaterno }}</h3>
+                </ion-label>
+            </ion-item>
+        </div>
+    </ion-list>
 </ion-content>
