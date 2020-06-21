@@ -6,8 +6,9 @@
 
 <ion-content [fullscreen]="true">
     <ion-list>
-        <ion-list-header color="primary" center lines="inset">
-            <h1><b>{{ syncUpWithout }}</b> Sin Sincronizar</h1>
+        <ion-list-header color="primary" center lines="full">
+            <ion-label><h1><b>{{ syncUpWithout }}</b> Sin Sincronizar</h1></ion-label>
+            <IonButton *ngIf="!isLoading && listUserCurrent.length > 0" (click)="sycnUpServer()">Sincronizar</IonButton>
         </ion-list-header>
         <div *ngIf="!isLoading && listUserCurrent.length > 0">
             <ion-item lines="none" *ngFor="let user of listUserCurrent">

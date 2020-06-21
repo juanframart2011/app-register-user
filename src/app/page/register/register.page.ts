@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { user } from "../../interface/user";
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-register',
@@ -9,12 +10,15 @@ import { user } from "../../interface/user";
 })
 export class RegisterPage {
 
+    imagenActive:File;
     isValidation = false;
+    isDevice:boolean = true;
 
     userDummy:user = {
         nombres: "",
         apellidoPaterno: "",
         apellidoMaterno: "",
+        imagen: "",
         sexo: "",
         fechaNacimiento: "",
         nacionalidad: "",
@@ -32,10 +36,19 @@ export class RegisterPage {
     userCurrent:user = this.userDummy;
 
     constructor(
+        private platform: Platform,
         public alertController: AlertController,
         private toastCtrl: ToastController,
-        public loadingController: LoadingController
-    ){}
+        public loadingController: LoadingController,
+        private camera: Camera
+    ){
+
+        let platformCurrent = this.platform.platforms();
+        if( platformCurrent.indexOf( "ios" ) !== -1 ){
+
+            this.isDevice = false;
+        }
+    }
 
     async _messageError() {
         const alert = await this.alertController.create({
@@ -119,6 +132,7 @@ export class RegisterPage {
             nombres: "",
             apellidoPaterno: "",
             apellidoMaterno: "",
+            imagen: "",
             sexo: "",
             fechaNacimiento: "",
             nacionalidad: "",
@@ -155,6 +169,33 @@ export class RegisterPage {
         return await this.loadingController.dismiss().then();
     }
 
+    changePicture( $event ){
+
+        let reader = new FileReader();
+        if( $event.target.files[0] ){
+            reader.onload = () => {
+                this.userCurrent.imagen = reader.result.toString();
+            }
+            reader.readAsDataURL( $event.target.files[0] );
+        }
+    }
+
+    getPicture(){
+        let options: CameraOptions = {
+            destinationType: this.camera.DestinationType.DATA_URL,
+            targetWidth: 1000,
+            targetHeight: 1000,
+            quality: 100
+        }
+        this.camera.getPicture( options )
+            .then(imageData => {
+            this.userCurrent.imagen = `data:image/jpeg;base64,${imageData}`;
+        })
+        .catch(error =>{
+            console.error( error );
+        });
+    }
+
     async openLoading() {
         
         this.isValidation = true;
@@ -173,11 +214,11 @@ export class RegisterPage {
 
         this.openLoading();
         
-        if( this.userCurrent.nombres && this.userCurrent.apellidoPaterno /*&& this.userCurrent.sexo
+        if( this.userCurrent.nombres && this.userCurrent.apellidoPaterno && this.userCurrent.sexo
             && this.userCurrent.fechaNacimiento && this.userCurrent.nacionalidad 
             && this.userCurrent.lugarNacimiento && this.userCurrent.paisResidencia
             && this.userCurrent.estadoReside && this.userCurrent.municipio && this.userCurrent.localidad
-            && this.userCurrent.direccion*/ ){
+            && this.userCurrent.direccion && this.userCurrent.imagen ){
 
                 this._addUser();
         }

@@ -33,6 +33,15 @@
         <ion-row>
             <ion-col>
                 <ion-item>
+                    <ion-button *ngIf="isDevice" (click)="getPicture()" expand="full">Tomar Foto</ion-button>
+                    <ion-input *ngIf="!isDevice" type="file" accept="image/*" (change)="changePicture($event)"></ion-input><br>
+                    <ion-img *ngIf="userCurrent.imagen" [src]="userCurrent.imagen"></ion-img>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
                     <ion-label position="floating">Sexo <span classs="required-input">*</span></ion-label>
                     <ion-select placeholder="Selecciona Sexo" [(ngModel)]="userCurrent.sexo" required>
                         <ion-select-option value="femenino">Femenino</ion-select-option>

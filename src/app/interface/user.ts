@@ -2,6 +2,7 @@ export interface user {
     nombres: string;
     apellidoPaterno: string;
     apellidoMaterno?: string;
+    imagen: string;
     sexo: string;
     fechaNacimiento: string;
     nacionalidad: string;
